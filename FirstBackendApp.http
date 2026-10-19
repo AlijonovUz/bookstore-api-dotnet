@@ -1,0 +1,6 @@
+@FirstBackendApp_HostAddress = http://localhost:5186
+
+GET {{FirstBackendApp_HostAddress}}/api/books/
+Accept: application/json
+
+###

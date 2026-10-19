@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SignalR Test</title>
+    <!-- Microsoft SignalR kutubxonasi (CDN) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.7/signalr.min.js"></script>
+</head>
+<body style="font-family: sans-serif; padding: 20px;">
+<h2>SignalR Jonli Bildirishnomalar</h2>
+<ul id="messagesList"></ul>
+
+<script>
+    // Serverdagi Hub manziliga ulanamiz
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/hubs/notification")
+        .withAutomaticReconnect()
+        .build();
+
+    // Serverdan kelgan "ReceiveNotification" xabarini ushlaymiz
+    connection.on("ReceiveNotification", function (message) {
+        const li = document.createElement("li");
+        li.textContent = message;
+        document.getElementById("messagesList").appendChild(li);
+    });
+
+    connection.start()
+        .then(() => console.log("SignalR ulandi!"))
+        .catch(err => console.error("Xato:", err));
+</script>
+</body>
+</html>
